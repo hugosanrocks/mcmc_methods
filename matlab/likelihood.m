@@ -8,7 +8,9 @@ pred = model(a,b,0,x);
 %likelihood
 likeli = log(normpdf(y,pred,sd));
 sumll = sum(likeli);
+cost =  (y' - pred')'*(y' - pred');
 
+array = [sumll, cost];
 
-result = sumll;
+result = array;
 return

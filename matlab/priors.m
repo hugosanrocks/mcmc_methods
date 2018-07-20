@@ -7,8 +7,6 @@ priorb = log(normpdf(b,meanb,sdb));
 priorsd = log(unifpdf(sd,minsd,maxsd));
 prior = priora + priorb + priorsd;
 
-
-
 result = prior;
 return
 
