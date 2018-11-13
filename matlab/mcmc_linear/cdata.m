@@ -22,9 +22,8 @@ y =  model(truea,trueb,err,x);
 data = [x', y'];
 save('-ascii','data.in','data');
 
-
+%Plot the data to be used
 figure(1)
-subplot(111)
 scatter(x,y),hold on
 legend('some data')
 xlabel('x'),ylabel('y')
@@ -51,14 +50,14 @@ set(gca,'fontsize',25)
 %   valssd(i)=likelihood(x,y,truea,trueb,sdvalues(i));
 %end
 
-xb = trueb-1:0.05:trueb+1;
-xa = truea-1:0.05:truea+1;
-xs = truesd-1:0.05:truesd+1;
-nb = normpdf(xb,5,3);
-na = normpdf(xa,0,4);
-ns = normpdf(xs,5,2);
+%xb = trueb-1:0.05:trueb+1;
+%xa = truea-1:0.05:truea+1;
+%xs = truesd-1:0.05:truesd+1;
+%nb = normpdf(xb,5,3);
+%na = normpdf(xa,0,4);
+%ns = normpdf(xs,5,2);
 
-figure(1)
+%figure(1)
 %subplot(222)
 %plot(xb,nb)
 %xlabel('\beta values'),ylabel('Probability')
