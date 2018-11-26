@@ -4,7 +4,8 @@ function result = modelf (f,q0,fc)
 
 for i=1:length(f)
 
- y(i) = q0 / (1 + (f(i)/fc)^2 );
+% y(i) = q0 / (1 + (f(i)/fc)^2 );
+  y(i) = q0 - (log10(1) + log10(1 + (f(i)/fc)^2));
 
 end
 

@@ -5,33 +5,38 @@
 %regression of the form y = ax+b+c
 %a=slope b=intercept c=error(std deviation)
 
-trueq0 = [10/32];          %True slope of line
-truefc = [12];       %True intercept of line
-truesd = 2;          %True noise in the data
 
-% create independent x-values 
-x = 0.01:0.01:50;
-samplesize=length(x);
-
-
-for i=1:1
-
-
-y =  modelf(x,trueq0(i),truefc(i));
-
+s=load('Spectra_M68.txt');
+ax=-0.4:0.05:1.6;
+x=10.^ax;
+y=interp1(s(:,1),s(:,2),x);
+y=log10(y);
 
 data = [x', y'];
 save('-ascii','data.in','data');
 
 %Plot the data to be used
 figure(1)
-subplot(121)
-loglog(x,y),hold on,xlim([1,60]),ylim([0.01,10])
-legend('some data')
-xlabel('x'),ylabel('y')
+semilogx(s(2:end,1),log10(s(2:end,2)),'b'),hold on
+semilogx(x,y,'.b','markersize',30)
+ylim([1,7])
 set(gca,'fontsize',25)
 
-end
+
+%q0 = input('q0:')
+%fc = input('fc:')
+%a=-5:0.1:1;
+%for i=1:length(a)
+%q0=1e+6;
+%truefc=10^a(i)
+%ym=modelf(x,log10(q0),truefc);
+%semilogx(x,ym,'-b'),hold on,ylim([1,9])
+%pause
+%end
+
+%semilogx(s(:,1),log10(s(:,2)),'-k'),hold on,ylim([1,9])
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%      EXTRA PLOTS              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

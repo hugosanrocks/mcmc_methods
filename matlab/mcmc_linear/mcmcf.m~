@@ -9,27 +9,24 @@ clc
 %
 
 %maximum number of iterations
-itermax = 10000;
+itermax = 1;
 
 %expected noise in the data
 sd = 2;
 
 %normal distribution for parameter "a"
-%q0   10^-1 to 10^9
-mina = -1;
-maxa = 9;
+mina = -3;
+maxa = 3;
 
 %uniform distribution for parameter "b"
-%fc
-minb = 0.01;
-maxb = 15;
+minb = 10;
+maxb = 14;
 
 %create the data
 cdataf;
 
-
 %first guess of parameters
-params(1,1:2) = [4.5, 3];
+params(1,1:2) = [1, 10];
 
 
 for i=1:itermax
@@ -50,8 +47,7 @@ for i=1:itermax
   %ratio between probabilities
   r = exp(pf-pi);
   %random number from uniform distribution
-  u = unifrnd(0.8,1);
-
+  u = unifrnd(0,1);
 
   %accept-reject criteria
   if ( u < r )   %accept
@@ -69,7 +65,6 @@ for i=1:itermax
   prio = priors(log10(params(i+1,1)),params(i,2),mina,maxa,minb,maxb);
   pi = like(1)+prio;
 
-
   %compute proposal probability
   like = likelihoodf(x,y,log10(params(i+1,1)),t(1,2),sd);
   prio = priors(log10(params(i+1,1)),t(1,2),mina,maxa,minb,maxb);
@@ -78,8 +73,7 @@ for i=1:itermax
   %estimate ratio of probabilities
   %remember jacobian of change of variable
   r = exp(pf-pi);
-  aa(i,1:4) = [params(i,1:2),t(1,2),r];
-  u = unifrnd(0.8,1);
+  u = rand();
 
   %accept-reject proposal
   if ( u < r )     %accept
@@ -88,19 +82,45 @@ for i=1:itermax
    params(i+1,2) = params(i,2);
   end
 
-
 end
 
 
 %how many samples used to converge?
-burnin = 500;
+burnin = 1;
 
-resa = mean(log10(params(burnin:end,1)));
+resa = mean(params(burnin:end,1));
 resb = mean(params(burnin:end,2));
 
 meany =  modelf(x,resa,resb);
-semilogx(x,meany,'-r')
-set(gca,'fontsize',25);
-legend('Original','Used spectra M68','Approx \omega^3');
-xlabel('Log10(Frequency)')
-ylabel('Log10(Amplitude)')
+loglog(x,meany,'*-r')
+
+pause
+
+figure(2)
+subplot(222)
+hist(params(burnin:end,1))
+xlabel('Slope a'),ylabel('Frequency')
+xlim([resa-0.4,resa+0.4])
+set(gca,'fontsize',20)
+
+subplot(224)
+hist(params(burnin:end,2))
+xlabel('Oordinate b'),ylabel('Frequency')
+xlim([resb-2,resb+2])
+set(gca,'fontsize',20)
+
+subplot(121)
+plot(params(burnin:end,1),params(burnin:end,2),'.r')
+xlabel('Slope a'),ylabel('Oordinate b')
+set(gca,'fontsize',20)
+xlim([resa-0.4,resa+0.4]),ylim([resb-2,resb+2])
+
+
+
+
+
+
+
+
+
+
