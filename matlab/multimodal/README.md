@@ -13,4 +13,4 @@ hugo.geofisica@gmail.com
 or 
 hugo.sanchez-reyes@univ-grenoble-alpes.fr
 
-
+![alt text](https://github.com/hugosanrocks/mcmc_methods/blob/master/matlab/multimodal/MCMC_vs_HMC_multimodal.png)
